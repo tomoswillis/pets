@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/pets')
+    ->uses('Pets\PetsController@index')
+    ->name('pets.index');
