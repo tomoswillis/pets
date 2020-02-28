@@ -16,14 +16,34 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/pets')
-    ->uses('Pets\PetsController@index')
-    ->name('pets.index');
+Route::middleware('auth')
+    ->group(function () {
+        Route::get('/pets')
+            ->uses('Pets\PetsController@index')
+            ->name('pets.index');
 
-Route::post('/pets/store')
-    ->uses('Pets\PetsController@store')
-    ->name('pets.store');
+        Route::get('/pets')
+        ->uses('Pets\PetsController@index')
+        ->name('pets.index');
+        
+        Route::post('/pets/store')
+            ->uses('Pets\PetsController@store')
+            ->name('pets.store');
+        
+        Route::delete('/pets/delete/{pet}')
+            ->uses('Pets\PetsController@destroy')
+            ->name('pets.destroy');
+        
+        Route::put('/pets/save/{pet}')
+            ->uses('Pets\PetsController@update')
+            ->name('pets.update');
+        
+        Route::get('/pets/edit/{pet}')
+            ->middleware('yourPet')
+            ->uses('Pets\PetsController@edit')
+            ->name('pets.edit');
+    });
