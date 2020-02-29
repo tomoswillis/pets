@@ -9,7 +9,6 @@ class PetsController extends Controller
 {
     public function index()
     {
-        dd(auth()->user()->pets()->where('id', 1)->first());
         $model = [
             'pets' => Pet::all()->map(function ($pet) {
                 return [
@@ -41,7 +40,7 @@ class PetsController extends Controller
             'age' => $data['age'],
         ]);
             
-        return response()->redirect(route('pets.index'));
+        return response()->redirectTo(route('pets.index'));
  
     }
 
@@ -50,6 +49,8 @@ class PetsController extends Controller
         if(!Pet::destroy($pet)){
             abort(500);
         }
+
+        
 
         return;
     }

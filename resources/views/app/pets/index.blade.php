@@ -8,6 +8,7 @@
    </ul>
 
    <form method="POST" action="/pets/store">
+      @method('PUT')
       @csrf
 
       @if ($errors->any())
@@ -40,8 +41,11 @@
          <option value="1">cat</option>
       </select>
 
-      <input type="text" name="sex">
+      <input type="radio" id="male" name="sex" value="male">
+         <label for="male">Male</label>
+         <input type="radio" id="female" name="sex" value="female">
+         <label for="female">Female</label><br>
 
-      <button type="submit">
+      <button type="submit">ADD PET</button>
    </form>
 @endsection

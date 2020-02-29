@@ -15,10 +15,9 @@ class CheckPetBelongsToUser
      */
     public function handle($request, Closure $next)
     {
-        dd(auth()->user()->get('id', 1));
-        // if(! auth()->user()->pets()->where('id', 1)->first()){
-        //     return redirect('home');
-        // }
+        $pet_id = $request->route('pet');
+        auth()->user()->pets()->where('id', $pet_id)->firstOrFail();
+        
         return $next($request);
     }
 }

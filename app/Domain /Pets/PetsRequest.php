@@ -24,6 +24,7 @@ class PetsRequest extends FormRequest
     public function rules()
     {
         return [
+            'species' => 'required',
             'name' => 'required|max:255',
             'sex' => 'required|in:male,female',
             'age' => 'required|max:3',

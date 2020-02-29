@@ -19,18 +19,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::middleware('auth')
-    ->group(function () {
-        Route::get('/pets')
-            ->uses('Pets\PetsController@index')
-            ->name('pets.index');
-
-        Route::get('/pets')
+Route::get('/pets')
         ->uses('Pets\PetsController@index')
         ->name('pets.index');
-        
-        Route::post('/pets/store')
+            
+Route::middleware('auth')
+    ->group(function () {
+        Route::put('/pets/store')
             ->uses('Pets\PetsController@store')
             ->name('pets.store');
         
