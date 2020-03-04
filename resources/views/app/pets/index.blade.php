@@ -48,4 +48,10 @@
 
       <button type="submit">ADD PET</button>
    </form>
+
+   <form method="POST" action="/pets/delete/4">
+      @method('DELETE')
+      @csrf
+      <button type="submit"> test </button>
+   </form>
 @endsection
