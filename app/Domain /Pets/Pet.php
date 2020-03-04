@@ -2,12 +2,14 @@
 
 namespace App\Domain\Pets;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Domain\Species\Species;
 use App\User;
 
 class Pet extends Model
 {
+    use SoftDeletes;
      /**
      * The attributes that are mass assignable.
      *

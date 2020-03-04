@@ -15,7 +15,7 @@ class PetsTableSeeder extends Seeder
         DB::table('pets')->insert([
             [
                 'id' => 1,
-                'user_id' => 1,
+                'user_id' => 4,
                 'species_id' => 1,
                 'name' => 'trevor',
                 'sex' => 'male',
@@ -48,7 +48,7 @@ class PetsTableSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'user_id' => 1,
+                'user_id' => 4,
                 'species_id' => 2,
                 'name' => 'poppy',
                 'sex' => 'male',

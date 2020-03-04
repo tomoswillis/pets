@@ -50,6 +50,18 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => now(),
                 'deleted_at' => null,
             ],
+            [
+            'id' => 4,
+                'location_id' => 1,
+                'name' => 't',
+                'email' => 't@test.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('12345678'),
+                'created_at' => now(),
+                'remember_token' => null,
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ],
            
         ]);
     
