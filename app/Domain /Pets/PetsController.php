@@ -3,14 +3,27 @@
 namespace App\Domain\Pets; 
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PetsController extends Controller
 {
+
+    protected $service; 
+    
+    public function __construct()
+    {
+        // parent::__construct();
+        $this->service = app(PetsService::class); 
+    }
+
     public function index()
     {
+        $pets = $this->service->getAllPets();
+
         $model = [
-            'pets' => Pet::all()->map(function ($pet) {
+            'pets' => $pets->map(function ($pet) {
                 return [
                     'id' => $pet->id,
                     'animal' => $pet->species->name,
@@ -18,13 +31,11 @@ class PetsController extends Controller
                     'name' => $pet->name,
                     'sex' => $pet->sex,
                     'age' => $pet->age,
-                    
                 ];
             }),
         ];
 
         return view('app/pets/index')->with(compact('model'));
-        
     }
 
     public function store(PetsRequest $request) {
@@ -44,40 +55,30 @@ class PetsController extends Controller
  
     }
 
-    public function destroy(Request $request, $pet)
+    public function destroy(Request $request)
     {
-        if(!Pet::destroy($pet)){
-            abort(500);
-        }
+        // $request->pet->Delete();
 
-        
+        Mail::to(auth()->user()->email)
+          ->send(new PetDeletedEmail($request->pet));
 
-        return;
+        return redirect()->route('pets.index');
     }
 
-    public function edit(Request $request, $pet)
+    public function edit(Request $request)
     {
-        if(!$pet = Pet::find($pet)){
-            abort(500);
-        }
-
         return view('app/pets/edit')
-            ->with('pet', $pet)
-            ;
+            ->with('pet', $request->pet);
     }
 
 
-    public function update(Request $request, int $pet)
+    public function update(Request $request)
     {
-         Pets::where('id', $pet)
-            ->update([
-                'name' => $request->input('name'),
-                'age' => $request->input('age'),
-            ]);
+        $request->pet->name = $request->input('name');
+        $request->pet->age = $request->input('age');
 
-        $pet = Pet::find($pet);
+        $request->pet->save();
 
-        return response()->redirect(route('pets.index'));
-        
+        return redirect()->route('pets.index'); 
     }
 }

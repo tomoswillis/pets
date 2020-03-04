@@ -23,13 +23,13 @@ Route::get('/pets')
         ->uses('Pets\PetsController@index')
         ->name('pets.index');
             
-Route::middleware('auth')
+Route::middleware(['auth', 'pet.owner'])
     ->group(function () {
         Route::put('/pets/store')
             ->uses('Pets\PetsController@store')
             ->name('pets.store');
         
-        Route::delete('/pets/delete/{pet}')
+        Route::delete('/pets/delete/{id}')
             ->uses('Pets\PetsController@destroy')
             ->name('pets.destroy');
         
@@ -37,8 +37,7 @@ Route::middleware('auth')
             ->uses('Pets\PetsController@update')
             ->name('pets.update');
         
-        Route::get('/pets/edit/{pet}')
-            ->middleware('yourPet')
+        Route::get('/pets/edit/{id}')
             ->uses('Pets\PetsController@edit')
             ->name('pets.edit');
     });
